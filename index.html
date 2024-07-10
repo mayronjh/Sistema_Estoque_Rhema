@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Estoque e Vendas</title>
+    <link rel="stylesheet" href="style.css">
+    <!--link rel="stylesheet" href="login-register.css"> <!-- Nome do novo arquivo CSS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div id="loginSection">
+        <img src="img/logo.png" alt="Logo" class="logo"/> <!-- Adicione a logo aqui -->
+        <h2>Stand Rhema Indígena</h2>
+        <label for="loginUsername">Nome de Usuário:</label>
+        <input type="text" id="loginUsername" />
+        <label for="loginPassword">Senha:</label>
+        <input type="password" id="loginPassword" />
+        <button onclick="login()">Entrar</button>
+        <p id="loginMessage"></p>
+        <button onclick="showRegister()">Criar Conta</button>
+    </div>
+    
+    <!-- Tela de Registro -->
+    <div id="registerSection" style="display: none;">
+        <img src="logo.png" alt="Logo" class="logo"/> <!-- Adicione a logo aqui -->
+        <h2>Registro</h2>
+        <label for="registerUsername">Nome de Usuário:</label>
+        <input type="text" id="registerUsername" />
+        <label for="registerPassword">Senha:</label>
+        <input type="password" id="registerPassword" />
+        <label for="registerRole">Perfil:</label>
+        <select id="registerRole">
+            <option value="admin">Admin</option>
+            <option value="vendedor">Vendedor</option>
+        </select>
+        <button onclick="register()">Registrar</button>
+        <p id="registerMessage"></p>
+        <button onclick="showLogin()">Voltar</button>
+    </div>
+
+    <!-- Tela Principal -->
+    <div id="mainSection" class="container" style="display: none;">
+        <div class="tab-container">
+            <button class="tab-button" onclick="openTab(event, 'estoque')">Estoque</button>
+            <button class="tab-button" onclick="openTab(event, 'vendas')">Vendas</button>
+            <button class="tab-button" onclick="openTab(event, 'historico')">Histórico</button>
+            <button class="tab-button" onclick="openTab(event, 'userManagement')">Gerenciamento de Usuários</button>
+        </div>
+
+        <!-- Aba de Estoque -->
+        <div id="estoque" class="tab-content">
+            <h2>Estoque</h2>
+            <div class="form-container">
+                <h3>Adicionar Item</h3>
+                <label for="itemName">Nome do Item:</label>
+                <input type="text" id="itemName" />
+                <label for="itemQuantity">Quantidade:</label>
+                <input type="number" id="itemQuantity" />
+                <label for="itemValue">Valor:</label>
+                <input type="number" id="itemValue" step="0.01" />
+                <button onclick="addItem()">Adicionar</button>
+            </div>
+            <div class="table-container">
+                <h3>Lista de Itens</h3>
+                <table id="inventoryTable">
+                    <tr>
+                        <th>Cód. Item</th>
+                        <th>Nome do Item</th>
+                        <th>Quantidade</th>
+                        <th>Valor</th>
+                        <th>Ações</th>
+                    </tr>
+                </table>
+            </div>
+            <!--input type="file" id="fileInput" accept=".xlsx, .xls" />
+            <button onclick="importStock()">Importar Estoque</button-->
+            <button onclick="saveToExcel()">Exportar para Excel</button>
+
+        </div>
+
+        <!-- Aba de Vendas -->
+        <div id="vendas" class="tab-content">
+            <h2>Vendas</h2>
+            <div class="form-container">
+                <label for="saleItemCode">Código do Item:</label>
+                <input type="number" id="saleItemCode" oninput="populateItemDetails()" />
+                <label for="saleItemName">Nome do Item:</label>
+                <input type="text" id="saleItemName" readonly />
+                <label for="saleQuantity">Quantidade:</label>
+                <input type="number" id="saleQuantity" />
+                <label for="itemQuantityAvailable">Quantidade Disponível:</label>
+                <input type="number" id="itemQuantityAvailable" readonly />
+                <label for="paymentType">Tipo de Pagamento:</label>
+                <select id="paymentType" onchange="toggleInstallments()">
+                    <option value="pix">PIX</option>
+                    <option value="dinheiro">Dinheiro</option>
+                    <option value="debito">Débito</option>
+                    <option value="credito">Crédito</option>
+                </select>
+                <div id="installmentsContainer" style="display: none;">
+                    <label for="installments">Parcelas:</label>
+                    <input type="number" id="installments" />
+                </div>
+                <button onclick="addSale()">Adicionar Venda</button>
+            </div>
+            <div class="table-container">
+                <h3>Vendas Recentes</h3>
+                <table id="salesTable">
+                    <tr>
+                        <th>Cód. Item</th>
+                        <th>Nome do Item</th>
+                        <th>Quantidade</th>
+                        <th>Valor Total</th>
+                        <th>Data</th>
+                        <th>Horário</th>
+                        <th>Tipo de Pagamento</th>
+                        <th>Parcelas</th>
+                        <th>Ações</th>
+                    </tr>
+                </table>
+            </div>
+            <button onclick="saveSalesToExcel()">Exportar Vendas para Excel</button>
+        </div>
+
+        <!-- Aba de Histórico -->
+        <div id="historico" class="tab-content">
+            <h2>Histórico de Vendas</h2>
+            <div class="table-container">
+                <table id="historyTable">
+                    <tr>
+                        <th>Cód. Item</th>
+                        <th>Nome do Item</th>
+                        <th>Quantidade Vendida</th>
+                        <th>Valor Total</th>
+                        <th>Data</th>
+                        <th>Horário</th>
+                        <th>Tipo de Pagamento</th>
+                        <th>Parcelas</th>
+                        <th>Ações</th>
+                    </tr>
+                </table>
+            </div>
+            <button onclick="saveHistoryToExcel()">Exportar Histórico para Excel</button>
+        </div>
+
+        <!-- Aba de Gerenciamento de Usuários -->
+        <div id="userManagement" class="tab-content">
+            <h2>Gerenciamento de Usuários</h2>
+            <div class="table-container">
+                <table id="userTable">
+                    <tr>
+                        <th>Nome de Usuário</th>
+                        <th>Perfil</th>
+                        <th>Ações</th>
+                    </tr>
+                </table>
+            </div>
+            <div class="form-container">
+                <h3>Gerenciar Usuário</h3>
+                <label for="manageUsername">Nome de Usuário:</label>
+                <input type="text" id="manageUsername" />
+                <button onclick="loadUserDetails()">Carregar</button>
+
+                <div id="userDetails" style="display: none;">
+                    <label for="newPassword">Nova Senha:</label>
+                    <input type="password" id="newPassword" />
+                    <button onclick="resetPassword()">Resetar Senha</button>
+                    
+                    <label for="newRole">Novo Perfil:</label>
+                    <select id="newRole">
+                        <option value="admin">Admin</option>
+                        <option value="vendedor">Vendedor</option>
+                    </select>
+                    <button onclick="changeUserRole()">Mudar Perfil</button>
+
+                    <button onclick="deleteUser()">Excluir Usuário</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botão de Logout -->
+    <button id="logoutButton" onclick="logout()" style="display: none;">Logout</button>
+</body>
+</html>

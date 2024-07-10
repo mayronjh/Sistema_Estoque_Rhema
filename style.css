@@ -1,0 +1,164 @@
+/* Estilo global */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container principal */
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.tab-container {
+    margin-bottom: 20px;
+}
+
+.tab-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px 5px 0 0;
+}
+
+.tab-button:hover {
+    background-color: #45a049;
+}
+
+.tab-content {
+    display: none;
+}
+
+.table-container {
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.form-container {
+    margin-bottom: 20px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+input[type="text"], input[type="number"], input[type="password"], select {
+    width: calc(100% - 22px);
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+p {
+    color: red;
+}
+
+#logoutButton {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #f44336;
+}
+
+#logoutButton:hover {
+    background-color: #e53935;
+}
+
+/* Centralização do conteúdo na tela de login e registro */
+#loginSection, #registerSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+}
+
+#loginSection h2, #registerSection h2 {
+    margin-bottom: 20px;
+}
+
+/* Estilo da logo */
+#loginSection .logo, #registerSection .logo {
+    border-radius: 50%;
+    width: 100px; /* Ajuste o tamanho da logo conforme necessário */
+    height: 100px; /* Ajuste o tamanho da logo conforme necessário */
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+/* Estilo dos inputs e botões */
+#loginSection input, #registerSection input, 
+#loginSection select, #registerSection select {
+    width: 100%;
+    max-width: 300px; /* Limita a largura dos campos e botões */
+    margin-bottom: 15px;
+}
+
+#loginSection button, #registerSection button {
+    width: 100%;
+    max-width: 300px; /* Limita a largura dos botões */
+}
+
+/* Estilos para a nova seção de boas-vindas */
+#welcomeSection {
+    text-align: center;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+#welcomeSection h2 {
+    margin-bottom: 20px;
+}
+
+#welcomeSection input[type="text"] {
+    width: calc(100% - 22px);
+}
+
+#welcomeSection button {
+    margin-top: 10px;
+}

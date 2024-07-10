@@ -1,0 +1,35 @@
+/* Centralização do conteúdo na tela de login e registro */
+#loginSection, #registerSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+}
+
+#loginSection h2, #registerSection h2 {
+    margin-bottom: 20px;
+}
+
+/* Estilo da logo */
+#loginSection .logo, #registerSection .logo {
+    border-radius: 50%;
+    width: 100px; /* Ajuste o tamanho da logo conforme necessário */
+    height: 100px; /* Ajuste o tamanho da logo conforme necessário */
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+/* Estilo dos inputs e botões */
+#loginSection input, #registerSection input, 
+#loginSection select, #registerSection select {
+    width: 100%;
+    max-width: 300px; /* Limita a largura dos campos e botões */
+    margin-bottom: 15px;
+}
+
+#loginSection button, #registerSection button {
+    width: 100%;
+    max-width: 300px; /* Limita a largura dos botões */
+}
